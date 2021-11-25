@@ -1,12 +1,9 @@
-import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mobile_final/authentication.dart';
-import '/driver.dart';
+
 
 
 
@@ -21,7 +18,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  File? _image;
+
 
   late TextEditingController _emailController,
       _reEmailController,
@@ -63,7 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Sign Up For Powers Fan Page"),
+          title: Text("Sign Up For G-Music"),
         ),
         backgroundColor: Colors.teal,
         resizeToAvoidBottomInset: false,
@@ -182,14 +179,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     hintText: "Enter phone number"),
               ),
-
-              OutlinedButton(
-                  onPressed:(){
-                    getImage(true);
-                  },
-                  child:const Text("Add Photo",
-                      style: TextStyle(
-                          color: Colors.amberAccent))),
               OutlinedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -206,25 +195,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         color: Colors.amberAccent)),
               )
             ])));
-  }
-
-  Future getImage(bool gallery) async {
-    ImagePicker imagePicker = ImagePicker();
-    XFile image;
-    // Let user select photo from gallery
-    if(gallery) {
-      image = (await imagePicker.pickImage(
-          source: ImageSource.gallery,imageQuality: 50))!;
-    }
-    // Otherwise open camera to get new photo
-    else{
-      image = (await imagePicker.pickImage(
-          source: ImageSource.camera,imageQuality: 50))!;
-    }
-    setState(() {
-      _image = File(image.path); // Use if you only need a single picture\
-
-    });
   }
   Future<void> signUp() async {
     try {
@@ -249,7 +219,6 @@ class _RegisterPageState extends State<RegisterPage> {
       })
           .then((value) => null)
           .onError((error, stackTrace) => null);
-      addImage();
 
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context)
@@ -263,22 +232,4 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
-  Future<void> addImage() async {
-    String id =Authentication().getUserId();
-
-    var storage = FirebaseStorage.instance;
-    TaskSnapshot snapshot = await storage
-        .ref()
-        .child(id)
-        .putFile(_image!);
-    if (snapshot.state == TaskState.success) {
-      final String downloadUrl =
-      await snapshot.ref.getDownloadURL();
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(id)
-          .update({"url": downloadUrl});
-    }
-    Navigator.pushReplacement(context,MaterialPageRoute(builder:  (con) => AppDriver()));
-  }
 }

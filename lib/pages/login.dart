@@ -57,6 +57,7 @@ class _LoginState extends State<Login>{
                       children: <Widget> [
                         emailPassword,
                         google,
+                        signup,
                       ],
                     )
                 ),

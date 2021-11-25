@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'driver.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +10,7 @@ class Authentication {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  String _verificationId = '';
+
   @override
 
   getAuth(){
@@ -48,85 +47,8 @@ class Authentication {
     }
 
   }
-  void signInWithEmail(_email) async{
-
-    await _auth.sendSignInLinkToEmail(
-      email: _email,
-      actionCodeSettings: ActionCodeSettings(
-          url: "https://midterm-621.firebaseapp.com",
-          androidPackageName: "com.company.midterm621",
-          iOSBundleId: "com.company.midterm621",
-          handleCodeInApp: true,
-          androidMinimumVersion: "16",
-          androidInstallApp: true),
-    );
 
 
-  }
-  handleLink(Uri link, _email, context) async {
-    if (link != null) {
-      final user = (await _auth.signInWithEmailLink(
-        email: _email,
-        emailLink: link.toString(),
-      ))
-          .user;
-      if (user != null) {
-        return true;
-
-      } else {
-        return false;
-      }
-
-    }else {
-      return false;
-    }
-  }
-
-
-
-
-
-  Future<void>verifyPhone(_phoneNumber, context) async{
-    PhoneVerificationCompleted verificationCompleted =
-        (PhoneAuthCredential phoneAuthCredential) async {
-      await _auth.signInWithCredential(phoneAuthCredential); };
-
-
-    PhoneVerificationFailed verificationFailed =
-        (FirebaseAuthException authException) {
-      print("Failed: $authException");
-    };
-
-    PhoneCodeSent codeSent =
-        (String verificationId, [int? resendToken]) async {
-      _verificationId = verificationId;
-    };
-
-    await _auth.verifyPhoneNumber(
-      phoneNumber: _phoneNumber,
-      timeout: const Duration(seconds: 30),
-      verificationCompleted: verificationCompleted,
-      verificationFailed: verificationFailed,
-      codeSent: codeSent,
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
-  }
-
-  void signInWithPhone(_sms, context) async{
-    try {
-      final AuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: _verificationId,
-        smsCode: _sms,
-      );
-      print(credential);
-      final User? user = (await _auth.signInWithCredential(credential)).user;
-
-
-    } catch (e) {
-      print(e);
-    }
-    Navigator.push(context,MaterialPageRoute(builder:  (context) => AppDriver()));
-  }
   void signInWithGoogle(context) async{
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -177,29 +99,6 @@ class Authentication {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (con) => AppDriver()));
     }
-  }
-
-  void signInWithFacebook(context) async{
-
-    final LoginResult fbUser = await FacebookAuth.instance.login();
-
-    final AuthCredential facebookCredential =
-    FacebookAuthProvider.credential(fbUser.accessToken!.token);
-
-    final userCredential =
-    await _auth.signInWithCredential(facebookCredential);
-
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (con) => AppDriver()));
-
-  }
-
-  void signInAnon(context) async{
-    _auth.signInAnonymously().then((result) {
-      final User? user = result.user;
-    });
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (con) => AppDriver()));
   }
 
   void signOut(BuildContext context) async {
