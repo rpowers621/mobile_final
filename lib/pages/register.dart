@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile_final/authentication.dart';
-
+import '/driver.dart';
 
 
 
@@ -18,7 +21,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-
+  File? _image;
 
   late TextEditingController _emailController,
       _reEmailController,
@@ -196,6 +199,7 @@ class _RegisterPageState extends State<RegisterPage> {
               )
             ])));
   }
+
   Future<void> signUp() async {
     try {
       var auth = Authentication().getAuth();
@@ -226,10 +230,9 @@ class _RegisterPageState extends State<RegisterPage> {
     } catch (e) {
       print(e);
     }
-
+    Navigator.pushReplacement(context,MaterialPageRoute(builder:  (con) => AppDriver()));
     setState(() {
 
     });
   }
-
 }

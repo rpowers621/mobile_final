@@ -47,8 +47,6 @@ class Authentication {
     }
 
   }
-
-
   void signInWithGoogle(context) async{
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
