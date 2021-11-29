@@ -1,7 +1,7 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_final/authentication.dart';
+import 'package:mobile_final/spotify.dart';
 
 
 
@@ -25,6 +25,8 @@ class _HomePageState extends State<HomePage> {
   String id =Authentication().getUserId();
   final FirebaseFirestore fb = FirebaseFirestore.instance;
 
+  var artist = Spotify().getArtist('0OdUWJ0sBjDrqHygGUXeCF');
+
 
 
   @override
@@ -36,44 +38,21 @@ class _HomePageState extends State<HomePage> {
           title: Text("Home Page"),
       ),
       backgroundColor: Colors.amberAccent,
-      body:
-
-      StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('users').snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ListView(
-            children: snapshot.data!.docs.map((document) {
-
+      body: Container(
+        child: FutureBuilder<void> (
+          future:  Spotify().getArtist('0OdUWJ0sBjDrqHygGUXeCF'),
+          builder: (context,snapshot){
+            if(snapshot.hasData){
+              final data = snapshot.data as String;
               return Container(
-                height: 60,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  color: Colors.teal,
-                ),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        child: Text( document['first_name']),
-                        padding: EdgeInsets.all(6),
-                      ),
-
-                    ]
-                ),
-                margin:EdgeInsets.all(5.0),
-
+                child: Text(data),
               );
-
-            }).toList(),
-          );
-        },
+            }else{
+              return CircularProgressIndicator();
+            }
+          },
+        ),
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Authentication().signOut(context);

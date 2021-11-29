@@ -46,6 +46,8 @@ dependencies:
   firebase_storage: ^10.0.4
   intl: ^0.17.0
   firebase_dynamic_links: ^2.0.10
+  spotify: ^0.6.0
+
 
 dev_dependencies:
   flutter_test:
