@@ -1,12 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_final/authentication.dart';
 import 'package:mobile_final/spotify.dart';
-
-
-
-
-
 
 
 
@@ -20,38 +16,49 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-
-
   String id =Authentication().getUserId();
   final FirebaseFirestore fb = FirebaseFirestore.instance;
-
-  var artist = Spotify().getArtist('0OdUWJ0sBjDrqHygGUXeCF');
-
+  User? user = FirebaseAuth.instance.currentUser;
 
 
   @override
   Widget build(BuildContext context){
 
-    return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.teal,
-          title: Text("Home Page"),
-      ),
+    return Scaffold(// new
       backgroundColor: Colors.amberAccent,
-      body: Container(
-        child: FutureBuilder<void> (
-          future:  Spotify().getArtist('0OdUWJ0sBjDrqHygGUXeCF'),
-          builder: (context,snapshot){
-            if(snapshot.hasData){
-              final data = snapshot.data as String;
-              return Container(
-                child: Text(data),
-              );
-            }else{
-              return CircularProgressIndicator();
-            }
-          },
+      body: Column(children: <Widget>[
+        Row(
+          children: [
+            Container(
+              child: const Text("Hello, " ,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20)),
+            ),
+          ],
         ),
+        Row(
+          children: [
+            Container(
+              child: FutureBuilder<void> (
+                future:  Spotify().getArtist('0OdUWJ0sBjDrqHygGUXeCF'),
+                builder: (context,snapshot){
+                  if(snapshot.hasData){
+                    final data = snapshot.data as String;
+                    return Container(
+                      child: Text(data),
+                    );
+                  }else{
+                    return const CircularProgressIndicator();
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+
+
+      ]
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -63,6 +70,7 @@ class _HomePageState extends State<HomePage> {
     );
 
   }
+
 
 
 

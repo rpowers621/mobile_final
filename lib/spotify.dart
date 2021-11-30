@@ -17,15 +17,30 @@ class Spotify {
     return SpotifyApi(getCredentials());
   }
 
-  getArtist(artist) async {
-    var artists = await getAPI().artists.get(artist);
+  getArtist(id) async {
+    var artists = await getAPI().artists.get(id);
     if( artists == null){
       print("error");
       return "Artist ID incorrect";
     } else{
       print(artists.name);
+
       return artists.name;
     }
+
+  }
+  getImage(id) async{
+    var artists = await getAPI().artists.get(id);
+    if( artists == null){
+      print("error");
+      return "Artist ID incorrect";
+    } else{
+      print(artists.name);
+
+      return artists.image;
+    }
+  }
+  getTopTracks(id) async{
 
   }
 
