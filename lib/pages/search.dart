@@ -26,7 +26,7 @@ class _SearchPageState extends State<SearchPage> {
   String id =Authentication().getUserId();
   final FirebaseFirestore fb = FirebaseFirestore.instance;
   User? user = FirebaseAuth.instance.currentUser;
-
+  var searchInput = '';
   final _formKey = GlobalKey<FormState>();
 
   final _inputController = TextEditingController();
@@ -43,8 +43,8 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context){
-
-    return Scaffold(// new
+print("yoo");
+    return Scaffold(
 
       backgroundColor: Colors.amberAccent,
       body: Column(children: <Widget>[
@@ -59,12 +59,6 @@ class _SearchPageState extends State<SearchPage> {
           ],
         ),
 
-
-
-        // Row(children: [
-        //   Form(
-        //     key: _formKey,
-        //     child:
         Column(children: <Widget>[
           const SizedBox(height: 5),
           TextFormField(
@@ -85,14 +79,15 @@ class _SearchPageState extends State<SearchPage> {
           ),
           OutlinedButton(
               onPressed: () {
-                if (_formKey.currentState!.validate()) {
+                // if (_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Loading Data')));
 
                   setState(() {
-                    artistStuff = Spotify().getArtist(_inputController);
+                    searchInput = _inputController.text;
+
                   });
-                }
+                // }
               },
               child: const Text('Add',
                   style: TextStyle(
@@ -100,10 +95,27 @@ class _SearchPageState extends State<SearchPage> {
           )
         ],
         ),
-        //   ),
-        // ],
-        // )
-
+        Row(
+          children: [
+            Container(
+              child: FutureBuilder<void> (
+                future:  Spotify().getArtist(searchInput),
+                builder: (context,snapshot){
+                  if(snapshot.hasData){
+                    final data = snapshot.data as String;
+                    return Container(
+                      child: Text(data),
+                    );
+                  }else{
+                    return Container(
+                      child: Text("error2")
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
       ]
       ),
       floatingActionButton: FloatingActionButton(

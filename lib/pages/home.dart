@@ -37,26 +37,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        Row(
-          children: [
-            Container(
-              child: FutureBuilder<void> (
-                future:  Spotify().getArtist('0OdUWJ0sBjDrqHygGUXeCF'),
-                builder: (context,snapshot){
-                  if(snapshot.hasData){
-                    final data = snapshot.data as String;
-                    return Container(
-                      child: Text(data),
-                    );
-                  }else{
-                    return const CircularProgressIndicator();
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
-
 
       ]
       ),
