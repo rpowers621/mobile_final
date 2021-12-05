@@ -82,9 +82,10 @@ print("yoo");
                 // if (_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Loading Data')));
-
-                  setState(() {
+                  Spotify().getCredentials();
+                  setState(() async {
                     searchInput = _inputController.text;
+                    await Spotify().getArtistInfo(searchInput);
 
                   });
                 // }
@@ -97,22 +98,28 @@ print("yoo");
         ),
         Row(
           children: [
-            Container(
-              child: FutureBuilder<void> (
-                future:  Spotify().getArtist(searchInput),
-                builder: (context,snapshot){
-                  if(snapshot.hasData){
-                    final data = snapshot.data as String;
-                    return Container(
-                      child: Text(data),
-                    );
-                  }else{
-                    return Container(
-                      child: Text("error2")
-                    );
-                  }
-                },
-              ),
+            FutureBuilder(
+              future:  Spotify().getArtistInfo(searchInput),
+              builder: (context,AsyncSnapshot snapshot){
+                if(snapshot.hasData){
+                  final data = snapshot.data;
+                  return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                    itemCount: data!.length,
+                      itemBuilder: (context, index){
+                      var id = data[index];
+                      return
+                          Container(
+                            height: 5,
+                            child: Text(id),
+                          );
+                      });
+                }else{
+                  return Container(
+                  );
+                }
+              },
             ),
           ],
         ),

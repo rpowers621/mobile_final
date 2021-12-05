@@ -36,17 +36,21 @@ dependencies:
   cupertino_icons: ^1.0.3
   firebase_core: ^ 1.10.0
   splashscreen: ^1.3.5
-  firebase_analytics: ^8.3.3
-  firebase_auth: ^3.2.0
+  firebase_analytics: 8.3.4
+  firebase_auth: 3.3.0
   cloud_firestore: ^3.1.0
   google_sign_in: ^4.5.9
   flutter_facebook_auth: ^3.5.2
   sms_autofill: ^2.1.2
   image_picker: ^0.8.4+2
-  firebase_storage: ^10.0.4
+  firebase_storage: 10.2.0
+  firebase_storage_web: 3.2.0
   intl: ^0.17.0
-  firebase_dynamic_links: ^2.0.10
-  spotify: ^0.6.0
+  http: ^0.13.0
+  spotify: 0.6.0
+
+
+
 
 
 dev_dependencies:
