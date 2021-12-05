@@ -15,6 +15,11 @@ class Spotify {
   var authStr = "";
 
   var uri = '';
+  var ids =  [];
+  var artist_names = [];
+  var topTracks = [];
+
+  var countryCode = "US";
 
 
 
@@ -24,34 +29,51 @@ class Spotify {
     return credentials;
   }
 
-  Future getArtistInfo(artist) async{
-    var id =[];
+  Future<List> getArtistInfo(artist) async{
+
     var href = [];
     var spotify = spotify2.SpotifyApi(getCredentials());
 
+
     var artistResult =  await spotify.search.get(artist).first(5)
-        .catchError((err) => print((err as spotify2.SpotifyException).message));;
-    print("test");
+        .catchError((err) => print((err as spotify2.SpotifyException).message));
 
+    try {
+      if (artistResult.isNotEmpty) {
+        for (var pages in artistResult) {
+          for (var item in pages.items!) {
+            if (item is Artist) {
+              this.artist_names.add(item.name);
+              this.ids.add(item.id!);
 
-    if(artistResult.isNotEmpty) {
-      for (var pages in artistResult) {
-        for (var item in pages.items!) {
-          if (item is Artist) {
-            print(item.name);
-            print(item.id);
-            id.add(item.id!);
-            print(id);
-            href.add(item.href!);
-            print(item.href);
+            }
           }
         }
       }
-      print('test8');
-    }
+    }catch (e){}
 
-    // var result = spotify.artists.getTopTracks(artistId, countryCode);
-    return 'test';
+    print(ids);
+    getTopTracks('5ndkK3dpZLKtBklKjxNQwT');
+
+     // var result = spotify.artists.getTopTracks(artistId, countryCode);
+    return artist_names;
+  }
+  getArtistId(index){
+    var artist_id = ids[index];
+    return artist_id;
+  }
+
+  Future getTopTracks(artist_id) async {
+    var spotify = spotify2.SpotifyApi(getCredentials());
+
+    var tracks = await spotify.artists.getTopTracks(artist_id, countryCode);
+    for (var track in tracks) {
+      this.topTracks.add(track.name);
+    }
+  }
+
+  Future getRelatedArtist(artist_id) async{
+
   }
 
 

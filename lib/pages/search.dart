@@ -48,17 +48,6 @@ print("yoo");
 
       backgroundColor: Colors.amberAccent,
       body: Column(children: <Widget>[
-        Row(
-          children: [
-            Container(
-              child: const Text("Hello, " ,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20)),
-            ),
-          ],
-        ),
-
         Column(children: <Widget>[
           const SizedBox(height: 5),
           TextFormField(
@@ -103,11 +92,20 @@ print("yoo");
               builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.hasData){
                   final data = snapshot.data;
-                  return Container(
-                    child:Text(data),
-                  );
+                  return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: data!.length,
+                      itemBuilder: (context, index){
+                        var id = data[index];
+                        return
+                          Expanded(
+                            child: Text(id),
+                          );
+                      });
                 }else{
                   return Container(
+                    child: Text("Error"),
                   );
                 }
               },
