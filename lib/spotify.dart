@@ -28,11 +28,12 @@ class Spotify {
     var id =[];
     var href = [];
     var spotify = spotify2.SpotifyApi(getCredentials());
+
     var artistResult =  await spotify.search.get(artist).first(5)
         .catchError((err) => print((err as spotify2.SpotifyException).message));;
     print("test");
 
-    for (var i in id) {
+
     if(artistResult.isNotEmpty) {
       for (var pages in artistResult) {
         for (var item in pages.items!) {
@@ -49,10 +50,8 @@ class Spotify {
       print('test8');
     }
 
-      print(i);
-    }
     // var result = spotify.artists.getTopTracks(artistId, countryCode);
-    return id;
+    return 'test';
   }
 
 

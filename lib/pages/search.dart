@@ -83,9 +83,9 @@ print("yoo");
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Loading Data')));
                   Spotify().getCredentials();
-                  setState(() async {
+                  setState(() {
                     searchInput = _inputController.text;
-                    await Spotify().getArtistInfo(searchInput);
+                    Spotify().getArtistInfo(searchInput);
 
                   });
                 // }
@@ -103,18 +103,9 @@ print("yoo");
               builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.hasData){
                   final data = snapshot.data;
-                  return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                    itemCount: data!.length,
-                      itemBuilder: (context, index){
-                      var id = data[index];
-                      return
-                          Container(
-                            height: 5,
-                            child: Text(id),
-                          );
-                      });
+                  return Container(
+                    child:Text(data),
+                  );
                 }else{
                   return Container(
                   );
