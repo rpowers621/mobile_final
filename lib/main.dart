@@ -4,7 +4,7 @@ import 'package:splashscreen/splashscreen.dart';
 
 import 'driver.dart';
 
-void main () async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
@@ -48,6 +48,7 @@ class SomethingWentWrong extends StatelessWidget {
     );
   }
 }
+
 class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);
 
@@ -55,7 +56,7 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Splash Screen",
-      theme: ThemeData (
+      theme: ThemeData(
         primarySwatch: Colors.lightGreen,
       ),
       home: Splash_info(),
@@ -63,6 +64,7 @@ class Splash extends StatelessWidget {
     );
   }
 }
+
 class Splash_info extends StatelessWidget {
   get colors => null;
 
@@ -70,10 +72,9 @@ class Splash_info extends StatelessWidget {
   Widget build(BuildContext context) {
     return SplashScreen(
         seconds: 7,
-        navigateAfterSeconds:  AppDriver(),
+        navigateAfterSeconds: AppDriver(),
         title: Text("User"),
         loadingText: Text("Loading"),
-
         loaderColor: Colors.amberAccent,
         gradientBackground: const LinearGradient(
             begin: Alignment.topCenter,
@@ -81,9 +82,7 @@ class Splash_info extends StatelessWidget {
             colors: [
               Colors.teal,
               Colors.amberAccent,
-            ]
-        )
-
-    );
+            ]),
+        child: Image(image: AssetImage('3.png')));
   }
 }
