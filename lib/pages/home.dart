@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_final/authentication.dart';
+import 'package:mobile_final/database.dart';
 import 'package:mobile_final/spotify.dart';
 
 
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   String id =Authentication().getUserId();
   final FirebaseFirestore fb = FirebaseFirestore.instance;
-  User? user = FirebaseAuth.instance.currentUser;
+  var user = Database().getUsername();
 
 
   @override
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
         Row(
           children: [
             Container(
-              child: const Text("Hello, " ,
+              child:  Text("Hello, ${user}",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 20)),

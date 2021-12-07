@@ -9,8 +9,26 @@ class Database {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final uid = Authentication().getUserId();
   var artistnames =[];
+  var username;
   var names = [];
   var docs;
+
+  getUsername() async{
+    try{
+      final QuerySnapshot result = await FirebaseFirestore.instance
+          .collection('users')
+          .where('user', isEqualTo: uid)
+          .get();
+
+      docs = result.docs.map((e) => e.data());
+      for (var i = 0; i < docs.length; i++) {
+        username = docs[i]['first_name'];
+      }
+    }catch(e){
+
+    }
+    return username;
+  }
 
 
   getArtists() async {
@@ -22,10 +40,7 @@ class Database {
           .where('user', isEqualTo: uid)
           .get();
 
-
       docs = result.docs.map((e) => e.data());
-
-
 
        if (result.size >= 0) {
          try {
@@ -35,31 +50,14 @@ class Database {
            for (var i = 0; i < artistnames.length; i++) {
              names.add(artistnames[i]['artistName']);
            }
-
-           //       for (var k in artistnames) {
-           //         for (var v in k) {
-           //           if (v == 'artistName') {
-           //             this.names.add(artistnames[v]);
-           //           }
-           //         }
-           //       }
-           //
          } catch (e) {}
        }
-      //
-      //   print(names);
-      //   return names;
-      // }else{
-      //   return null;
-      // }
      }catch(e){}
     return names;
   }
 
   Future<String> addArtist(id,name) async{
-    print("in add artist");
-    print(id);
-    print(name);
+
     try {
       _db
           .collection("artists")
@@ -77,5 +75,27 @@ class Database {
       print(e);
     }
     return 'true';
+  }
+  removeArtist(id) async{
+    print("in remove artist");
+    try {
+      final QuerySnapshot result = await FirebaseFirestore.instance
+          .collection('artists')
+          .where('user', isEqualTo: uid)
+          .get();
+
+      docs = result.docs.map((e) => e.data());
+
+      if (result.size >= 0) {
+        try {
+          for (var artistName in docs) {
+            this.artistnames.add(artistName);
+          }
+          for (var i = 0; i < artistnames.length; i++) {
+            names.add(artistnames[i]['artistName']);
+          }
+        } catch (e) {}
+      }
+    }catch(e){}
   }
 }

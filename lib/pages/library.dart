@@ -41,11 +41,18 @@ class _LibraryPageState extends State<LibraryPage> {
                   shrinkWrap: true,
                   itemCount: data!.length,
                   itemBuilder: (context, index){
-                    var id = data[index];
-                    return
-                      Expanded(
+                    var name = data[index];
+                    return Dismissible(key: Key(name),
+                        onDismissed: (direction) {
+                          setState(() {
+                            data.removeAt(index);
+                          });
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text('$name removed')));
+                        },
+                        background: Container(color: Colors.red),
                         child:
-                        OutlinedButton(
+                        ElevatedButton(
                             style: OutlinedButton.styleFrom(
                                 backgroundColor:Colors.white,
                                 elevation: 10,
@@ -62,7 +69,7 @@ class _LibraryPageState extends State<LibraryPage> {
 
                               });
                             },
-                            child:  Text(id,
+                            child:  Text(name,
                               style: TextStyle(
                                   color: Colors.black),)
                         ),
@@ -70,7 +77,7 @@ class _LibraryPageState extends State<LibraryPage> {
                   });
             }else{
               return Container(
-                child: Text("Error"),
+                child: CircularProgressIndicator(),
               );
             }
           },
