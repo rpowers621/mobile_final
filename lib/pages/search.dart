@@ -20,8 +20,6 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
 
 
-
-  String id =Authentication().getUserId();
   final FirebaseFirestore fb = FirebaseFirestore.instance;
   User? user = FirebaseAuth.instance.currentUser;
   var searchInput = '';
@@ -29,6 +27,7 @@ class _SearchPageState extends State<SearchPage> {
   var artist_index;
 
   var artist_id;
+  var artist_name;
 
   final _inputController = TextEditingController();
   late  AsyncSnapshot artistStuff;
@@ -103,8 +102,7 @@ class _SearchPageState extends State<SearchPage> {
                                 ),
 
                                 onPressed: () async {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('Loading Data')));
+
                                   artist_id =  await Spotify().getArtistId(id);
 
                                   setState(() {
@@ -119,21 +117,22 @@ class _SearchPageState extends State<SearchPage> {
                       });
                 }else{
                   return Container(
-                    child: Text("Error"),
+                    child: CircularProgressIndicator(),
                   );
                 }
               },
             ),
         OutlinedButton(
-            onPressed:(){
+            onPressed:() async {
           // delete this once DB is connected
-              var result =Database().addArtist(artist_id); //THIS IS WHERE WE ADD TO DATABASE
-              if(result){
+              artist_name = await Spotify().getArtistName(artist_id);
+              var result =Database().addArtist(artist_id,artist_name); //THIS IS WHERE WE ADD TO DATABASE
+              if(result == 'true'){
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Artist Added To Saved')));
               }else{
                 ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Error')));
+                    const SnackBar(content: Text('Loading')));
               }
             }
          , child:Text('Add Artist'))

@@ -15,6 +15,7 @@ class Spotify {
   String id ='';
   var artist_names = [];
   var topTracks = [];
+  String name = '';
 
   var countryCode = "US";
 
@@ -55,7 +56,7 @@ class Spotify {
 
     var artistResult =  await spotify.search.get(artist).first(1)
         .catchError((err) => print((err as spotify2.SpotifyException).message));
-  print("hello");
+
     try {
       if (artistResult.isNotEmpty) {
         for (var pages in artistResult) {
@@ -68,10 +69,22 @@ class Spotify {
         }
       }
     }catch (e){}
-    print('test');
+
     print(id);
 
     return id;
+  }
+  Future<String> getArtistName(artist) async {
+    print("in artist name");
+    print(artist);
+    var spotify = spotify2.SpotifyApi(getCredentials());
+
+     var artistResult =  await spotify.artists.get(artist);
+     try{
+       name = artistResult.name!;
+     }catch(e){}
+     print(artistResult.name);
+    return name;
   }
 
   Future getTopTracks(artist_id) async {
