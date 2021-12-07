@@ -73,16 +73,22 @@ class Splash_info extends StatelessWidget {
     return SplashScreen(
         seconds: 7,
         navigateAfterSeconds: AppDriver(),
-        title: Text("User"),
-        loadingText: Text("Loading"),
-        loaderColor: Colors.amberAccent,
-        gradientBackground: const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.teal,
-              Colors.amberAccent,
-            ]),
-         image: Image.asset("assets/3.png"));
+        // title: Text("User"),
+        // loadingText: Text("Loading"),
+        // loaderColor: Colors.amberAccent,
+        // gradientBackground: const LinearGradient(
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.bottomCenter,
+        //     colors: [
+        //       Colors.teal,
+        //       Colors.amberAccent,
+        //     ]),
+        image: Image.asset(
+          "assets/3.png"
+          height: 100,
+          width: 200,
+          fit: BoxFit.fitWidth,
+          )
+        );
   }
 }
