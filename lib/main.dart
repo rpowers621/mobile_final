@@ -22,6 +22,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         body: FutureBuilder(
+          theme: ThemeData(fontFamily: 'RobotoCondensed'),
           future: _initialization,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
@@ -58,6 +59,7 @@ class Splash extends StatelessWidget {
       title: "Splash Screen",
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
+        ThemeData(fontFamily: 'RobotoCondensed'),
       ),
       home: Splash_info(),
       debugShowCheckedModeBanner: false,
