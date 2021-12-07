@@ -19,19 +19,23 @@ class _HomePageState extends State<HomePage> {
 
   String id =Authentication().getUserId();
   final FirebaseFirestore fb = FirebaseFirestore.instance;
-  var user = Database().getUsername();
+  var user;
+  getUser()async {
+    user = await Database().getUsername();
+    print("user: ${user}");
+  }
 
 
   @override
   Widget build(BuildContext context){
-
-    return Scaffold(// new
+  getUser();
+    return Scaffold(
       backgroundColor: Colors.amberAccent,
       body: Column(children: <Widget>[
         Row(
           children: [
             Container(
-              child:  Text("Hello, ${user}",
+              child:  Text("Hello, $user",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 20)),

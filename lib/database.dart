@@ -9,31 +9,39 @@ class Database {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final uid = Authentication().getUserId();
   var artistnames =[];
-  var username;
+  var username = [];
   var names = [];
+  String user= '';
   var docs;
 
   getUsername() async{
+    print("in username");
     try{
       final QuerySnapshot result = await FirebaseFirestore.instance
           .collection('users')
-          .where('user', isEqualTo: uid)
+          .where('uid', isEqualTo: uid)
           .get();
 
+      print("in here too");
       docs = result.docs.map((e) => e.data());
-      for (var i = 0; i < docs.length; i++) {
-        username = docs[i]['first_name'];
-      }
-    }catch(e){
 
-    }
-    return username;
+      if (result.size >= 0) {
+        try {
+          for (var fields in docs) {
+            this.username.add(fields);
+          }
+          for (var i = 0; i < username.length; i++) {
+            user = username[i]['first_name'];
+          }
+        } catch (e) {}
+      }
+    }catch(e){}
+    print(user);
+    return user;
   }
 
 
   getArtists() async {
-    print(uid);
-
     try {
       final QuerySnapshot result = await FirebaseFirestore.instance
           .collection('artists')

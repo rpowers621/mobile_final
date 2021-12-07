@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
             if (snapshot.hasError) {
               return const SomethingWentWrong();
             } else if (snapshot.connectionState == ConnectionState.done) {
-              return Splash();
+              return AppDriver();
             } else {
               return Container(color: Colors.white);
             }
@@ -84,7 +84,7 @@ class Splash_info extends StatelessWidget {
         //       Colors.amberAccent,
         //     ]),
         image: Image.asset(
-          "assets/3.png"
+          "assets/3.png",
           height: 100,
           width: 200,
           fit: BoxFit.fitWidth,

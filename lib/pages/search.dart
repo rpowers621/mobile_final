@@ -132,7 +132,7 @@ class _SearchPageState extends State<SearchPage> {
                     const SnackBar(content: Text('Artist Added To Saved')));
               }else{
                 ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Loading')));
+                    const SnackBar(content: Text('Artist Added To Saved')));
               }
             }
          , child:Text('Add Artist'))
