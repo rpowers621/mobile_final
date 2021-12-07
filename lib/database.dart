@@ -21,10 +21,11 @@ class Database {
   }
 
   addArtist(id) {
+    print(id);
     try {
       _db
           .collection("artists")
-          .doc(uid)
+          .doc()
           .set({
         "user": uid,
         "artistID": id
@@ -35,6 +36,8 @@ class Database {
 
     } catch (e) {
       print(e);
+      return false;
     }
+    return true;
   }
 }

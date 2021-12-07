@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_final/authentication.dart';
 import 'package:mobile_final/spotify.dart';
+import 'package:mobile_final/database.dart';
 
 
 
@@ -25,8 +26,9 @@ class _SearchPageState extends State<SearchPage> {
   User? user = FirebaseAuth.instance.currentUser;
   var searchInput = '';
   Color buttonColor = Colors.white;
+  var artist_index;
 
-  var artist_id = '';
+  var artist_id;
 
   final _inputController = TextEditingController();
   late  AsyncSnapshot artistStuff;
@@ -42,7 +44,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context){
-print("yoo");
+
     return Scaffold(
 
       backgroundColor: Colors.amberAccent,
@@ -92,7 +94,7 @@ print("yoo");
                             child:
                             OutlinedButton(
                                 style: OutlinedButton.styleFrom(
-                                  backgroundColor:this.buttonColor,
+                                  backgroundColor:buttonColor,
                                   elevation: 10,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -100,13 +102,13 @@ print("yoo");
                                   fixedSize: Size.fromWidth(500)
                                 ),
 
-                                onPressed: () {
+                                onPressed: () async {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(content: Text('Loading Data')));
+                                  artist_id =  await Spotify().getArtistId(id);
 
                                   setState(() {
                                     this.buttonColor = Colors.red;
-                                   artist_id = Spotify().getArtistId(index);
                                   });
                                 },
                                 child:  Text(id,
@@ -124,7 +126,15 @@ print("yoo");
             ),
         OutlinedButton(
             onPressed:(){
-              //addArtist(artist_id); THIS IS WHERE WE ADD TO DATABASE
+          // delete this once DB is connected
+              var result =Database().addArtist(artist_id); //THIS IS WHERE WE ADD TO DATABASE
+              if(result){
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Artist Added To Saved')));
+              }else{
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Error')));
+              }
             }
          , child:Text('Add Artist'))
       ]

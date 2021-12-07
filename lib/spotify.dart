@@ -12,7 +12,7 @@ class Spotify {
   var authStr = "";
 
   var uri = '';
-  List<String> ids =  [];
+  String id ='';
   var artist_names = [];
   var topTracks = [];
 
@@ -40,7 +40,6 @@ class Spotify {
           for (var item in pages.items!) {
             if (item is Artist) {
               this.artist_names.add(item.name);
-              this.ids.add(item.id!);
 
             }
           }
@@ -48,14 +47,31 @@ class Spotify {
       }
     }catch (e){}
 
-    print(ids);
-
     return artist_names;
   }
-  getArtistId(index){
-    var artist_id = ids[index];
-    print(artist_id);
-    return artist_id;
+  Future<String> getArtistId(artist) async{
+    var spotify = spotify2.SpotifyApi(getCredentials());
+
+
+    var artistResult =  await spotify.search.get(artist).first(1)
+        .catchError((err) => print((err as spotify2.SpotifyException).message));
+  print("hello");
+    try {
+      if (artistResult.isNotEmpty) {
+        for (var pages in artistResult) {
+          for (var item in pages.items!) {
+            if (item is Artist) {
+              this.id = item.id!;
+
+            }
+          }
+        }
+      }
+    }catch (e){}
+    print('test');
+    print(id);
+
+    return id;
   }
 
   Future getTopTracks(artist_id) async {
