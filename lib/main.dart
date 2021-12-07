@@ -87,8 +87,8 @@ class Splash_info extends StatelessWidget {
         //     ]),
         image: Image.asset(
           "assets/3.png"
-          height: 100,
-          width: 200,
+          height: 1300,
+          width: 1480,
           // fit: BoxFit.fitWidth,
           )
         );
