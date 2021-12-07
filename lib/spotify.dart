@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:spotify/spotify.dart' as spotify2;
 import 'package:spotify/spotify.dart';
 
@@ -15,7 +12,7 @@ class Spotify {
   var authStr = "";
 
   var uri = '';
-  var ids =  [];
+  List<String> ids =  [];
   var artist_names = [];
   var topTracks = [];
 
@@ -31,7 +28,6 @@ class Spotify {
 
   Future<List> getArtistInfo(artist) async{
 
-    var href = [];
     var spotify = spotify2.SpotifyApi(getCredentials());
 
 
@@ -53,13 +49,12 @@ class Spotify {
     }catch (e){}
 
     print(ids);
-    getTopTracks('5ndkK3dpZLKtBklKjxNQwT');
 
-     // var result = spotify.artists.getTopTracks(artistId, countryCode);
     return artist_names;
   }
   getArtistId(index){
     var artist_id = ids[index];
+    print(artist_id);
     return artist_id;
   }
 
@@ -70,6 +65,7 @@ class Spotify {
     for (var track in tracks) {
       this.topTracks.add(track.name);
     }
+    return topTracks;
   }
 
   Future getRelatedArtist(artist_id) async{

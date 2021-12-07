@@ -8,9 +8,6 @@ import 'package:mobile_final/spotify.dart';
 
 
 
-
-
-
 class SearchPage extends StatefulWidget {
   SearchPage({Key? key}) : super(key: key);
 
@@ -27,7 +24,9 @@ class _SearchPageState extends State<SearchPage> {
   final FirebaseFirestore fb = FirebaseFirestore.instance;
   User? user = FirebaseAuth.instance.currentUser;
   var searchInput = '';
-  final _formKey = GlobalKey<FormState>();
+  Color buttonColor = Colors.white;
+
+  var artist_id = '';
 
   final _inputController = TextEditingController();
   late  AsyncSnapshot artistStuff;
@@ -48,7 +47,6 @@ print("yoo");
 
       backgroundColor: Colors.amberAccent,
       body: Column(children: <Widget>[
-        Column(children: <Widget>[
           const SizedBox(height: 5),
           TextFormField(
             autocorrect: false,
@@ -64,30 +62,21 @@ print("yoo");
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(5.0))),
                 hintText: "Artist ID"),
-
           ),
           OutlinedButton(
               onPressed: () {
-                // if (_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Loading Data')));
                   Spotify().getCredentials();
                   setState(() {
                     searchInput = _inputController.text;
-                    Spotify().getArtistInfo(searchInput);
-
                   });
-                // }
               },
-              child: const Text('Add',
+              child: const Text('Search',
                   style: TextStyle(
                       color: Colors.black))
-          )
-        ],
-        ),
-        Row(
-          children: [
-            FutureBuilder(
+          ),
+            FutureBuilder<List>(
               future:  Spotify().getArtistInfo(searchInput),
               builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.hasData){
@@ -100,7 +89,30 @@ print("yoo");
                         var id = data[index];
                         return
                           Expanded(
-                            child: Text(id),
+                            child:
+                            OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor:this.buttonColor,
+                                  elevation: 10,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  fixedSize: Size.fromWidth(500)
+                                ),
+
+                                onPressed: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('Loading Data')));
+
+                                  setState(() {
+                                    this.buttonColor = Colors.red;
+                                   artist_id = Spotify().getArtistId(index);
+                                  });
+                                },
+                                child:  Text(id,
+                                    style: TextStyle(
+                                        color: Colors.black),)
+                            ),
                           );
                       });
                 }else{
@@ -110,8 +122,11 @@ print("yoo");
                 }
               },
             ),
-          ],
-        ),
+        OutlinedButton(
+            onPressed:(){
+              //addArtist(artist_id); THIS IS WHERE WE ADD TO DATABASE
+            }
+         , child:Text('Add Artist'))
       ]
       ),
       floatingActionButton: FloatingActionButton(
