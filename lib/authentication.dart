@@ -31,6 +31,7 @@ class Authentication {
       UserCredential uid = await _auth.signInWithEmailAndPassword(
           email: _email,
           password: _password);
+
       Navigator.push(context,MaterialPageRoute(builder:  (context) => AppDriver()));
 
     }on FirebaseAuthException catch(e) {

@@ -44,8 +44,10 @@ class _LibraryPageState extends State<LibraryPage> {
                     var name = data[index];
                     return Dismissible(key: Key(name),
                         onDismissed: (direction) {
-                          setState(() {
+                          setState(() async {
                             data.removeAt(index);
+                            var art_id = await Spotify().getArtistId(name);
+                            Database().removeArtist(art_id);
                           });
                           ScaffoldMessenger.of(context)
                               .showSnackBar(SnackBar(content: Text('$name removed')));
@@ -54,6 +56,7 @@ class _LibraryPageState extends State<LibraryPage> {
                         child:
                         ElevatedButton(
                             style: OutlinedButton.styleFrom(
+                                alignment: Alignment.center,
                                 backgroundColor:Colors.white,
                                 elevation: 10,
                                 shape: RoundedRectangleBorder(
@@ -73,6 +76,7 @@ class _LibraryPageState extends State<LibraryPage> {
                               style: TextStyle(
                                   color: Colors.black),)
                         ),
+
                       );
                   });
             }else{

@@ -61,7 +61,7 @@ class Database {
     try {
       _db
           .collection("artists")
-          .doc()
+          .doc(id + uid)
           .set({
         "user": uid,
         "artistID": id,
@@ -78,24 +78,14 @@ class Database {
   }
   removeArtist(id) async{
     print("in remove artist");
+    print(id);
     try {
-      final QuerySnapshot result = await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection('artists')
-          .where('user', isEqualTo: uid)
-          .get();
+          .doc(id+ uid)
+          .delete();
 
-      docs = result.docs.map((e) => e.data());
-
-      if (result.size >= 0) {
-        try {
-          for (var artistName in docs) {
-            this.artistnames.add(artistName);
-          }
-          for (var i = 0; i < artistnames.length; i++) {
-            names.add(artistnames[i]['artistName']);
-          }
-        } catch (e) {}
-      }
     }catch(e){}
+
   }
 }

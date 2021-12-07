@@ -106,7 +106,7 @@ class _SearchPageState extends State<SearchPage> {
                                   artist_id =  await Spotify().getArtistId(id);
 
                                   setState(() {
-                                    this.buttonColor = Colors.red;
+
                                   });
                                 },
                                 child:  Text(id,
