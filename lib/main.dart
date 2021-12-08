@@ -58,6 +58,7 @@ class Splash extends StatelessWidget {
       title: "Splash Screen",
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
+        fontFamily: 'RobotoCondensed',
       ),
       home: Splash_info(),
       debugShowCheckedModeBanner: false,
@@ -85,9 +86,10 @@ class Splash_info extends StatelessWidget {
         //     ]),
         image: Image.asset(
           "assets/3.png",
-          height: 100,
-          width: 200,
-          fit: BoxFit.fitWidth,
+          height: 1300,
+          width: 1480,
+          // fit: BoxFit.fitWidth,
+
           )
         );
   }

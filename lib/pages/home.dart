@@ -5,8 +5,6 @@ import 'package:mobile_final/authentication.dart';
 import 'package:mobile_final/database.dart';
 import 'package:mobile_final/spotify.dart';
 
-
-
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
@@ -14,10 +12,8 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-
 class _HomePageState extends State<HomePage> {
-
-  String id =Authentication().getUserId();
+  String id = Authentication().getUserId();
   final FirebaseFirestore fb = FirebaseFirestore.instance;
   var user;
   getUser()async {
@@ -25,8 +21,8 @@ class _HomePageState extends State<HomePage> {
     print("user: ${user}");
   }
 
-
   @override
+
   Widget build(BuildContext context){
   getUser();
     return Scaffold(
@@ -35,16 +31,15 @@ class _HomePageState extends State<HomePage> {
         Row(
           children: [
             Container(
-              child:  Text("Hello, $user",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20)),
+              child: Text("Hello, $user",
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontFamily: 'RobotoCondensed')),
             ),
           ],
         ),
-
-      ]
-      ),
+      ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Authentication().signOut(context);
@@ -53,11 +48,5 @@ class _HomePageState extends State<HomePage> {
         child: const Icon(Icons.logout),
       ),
     );
-
   }
-
-
-
-
 }
-
