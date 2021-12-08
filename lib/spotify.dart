@@ -98,11 +98,7 @@ class Spotify {
     }
     return topTracks;
   }
-
-  Future getRelatedArtist(artist_id) async{
-
-  }
-
+  
   Future<Map> getFeaturedPlaylists() async{
 
     var spotify = spotify2.SpotifyApi(getCredentials());
