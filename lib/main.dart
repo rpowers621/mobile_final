@@ -55,7 +55,7 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Splash Screen",
+      title: "GeSpot",
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
         fontFamily: 'RobotoCondensed',
@@ -74,23 +74,23 @@ class Splash_info extends StatelessWidget {
     return SplashScreen(
         seconds: 7,
         navigateAfterSeconds: AppDriver(),
-        // title: Text("User"),
-        // loadingText: Text("Loading"),
-        // loaderColor: Colors.amberAccent,
-        // gradientBackground: const LinearGradient(
-        //     begin: Alignment.topCenter,
-        //     end: Alignment.bottomCenter,
-        //     colors: [
-        //       Colors.teal,
-        //       Colors.amberAccent,
-        //     ]),
+        title: Text("Mobile App Project"),
+        loadingText: Text("Loading the fun!"),
+        loaderColor: Colors.white,
+        gradientBackground: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.limeAccent,
+              Colors.indigo,
+            ]),
         image: Image.asset(
           "assets/3.png",
           height: 1300,
           width: 1480,
           // fit: BoxFit.fitWidth,
 
-          )
-        );
+        )
+    );
   }
 }
