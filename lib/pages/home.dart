@@ -65,11 +65,14 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text("Our featured playlist is: $name", style: const TextStyle(fontSize: 30, color: Colors.lightGreenAccent), textAlign: TextAlign.center),
                             SizedBox(width: 5, height: 10),
-                            Text("Go to this link to see the featured playlist!", style: const TextStyle(fontSize: 25, color: Colors.white), textAlign: TextAlign.center),
-                            SizedBox(width: 5, height: 10),
                             Container(
                               width: 300,
-                              child: Text("https://open.spotify.com/playlist/37i9dQZF1DXc5e2bJhV6pu", style: const TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.center),
+                              child: new InkWell(
+                                  child: Text("Click here to see the featured playlist!", style: const TextStyle(fontSize: 15
+                                      , color: Colors.white), textAlign: TextAlign.center),
+                                  onTap:() => launch("https://open.spotify.com/playlist/37i9dQZF1DXc5e2bJhV6pu"),
+                      )
+
                             )
                           ]
                         );
