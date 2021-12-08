@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   var holder = "";
   String id = Authentication().getUserId();
   final FirebaseFirestore fb = FirebaseFirestore.instance;
-  var user = Database().getUsername();
+  var user ='G-User';
   @override
 
   Widget build(BuildContext context){
