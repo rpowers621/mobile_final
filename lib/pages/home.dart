@@ -15,9 +15,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String id = Authentication().getUserId();
   final FirebaseFirestore fb = FirebaseFirestore.instance;
-  var user;
+  var user ='G-User';
   getUser()async {
     user = await Database().getUsername();
+    return user;
     print("user: ${user}");
   }
 
@@ -26,20 +27,23 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context){
   getUser();
     return Scaffold(
-      backgroundColor: Colors.amberAccent,
-      body: Column(children: <Widget>[
-        Row(
-          children: [
-            Container(
-              child: Text("Hello, $user",
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontFamily: 'RobotoCondensed')),
-            ),
-          ],
+      backgroundColor: Colors.indigo,
+      body:Container(
+        constraints: BoxConstraints.expand(),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/cover.jpeg"),
+            fit: BoxFit.cover)),
+        child: Text("Hello, $user",
+          style: const TextStyle(
+              color: Colors.white,
+              fontSize: 50,
+              fontFamily: 'RobotoMono'
+          ),
         ),
-      ]),
+
+
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Authentication().signOut(context);

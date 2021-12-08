@@ -29,7 +29,7 @@ class _LibraryPageState extends State<LibraryPage> {
 
     return Scaffold(
 
-      backgroundColor: Colors.amberAccent,
+      backgroundColor: Colors.indigo,
       body: Column(children: <Widget>[
         FutureBuilder(
           future:  Database().getArtists(),

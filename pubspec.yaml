@@ -72,6 +72,10 @@ flutter:
   fonts:
     - family: RobotoMono
       fonts:
+        - asset: assets/RobotoCondensed-Regular.ttf
+        - asset: assets/RobotoCondensed-Bold.ttf
+          weight: 700
+
 
 
   # The following line ensures that the Material Icons font is

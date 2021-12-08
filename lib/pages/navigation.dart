@@ -79,8 +79,20 @@ class _NavigationPageState extends State<NavigationPage> {
       ),
 
       appBar: AppBar(
-        backgroundColor: Colors.teal,
-        title: const Text("Home Page"),
+        backgroundColor: Colors.lightGreenAccent,
+        title:  Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/3.png',
+              fit: BoxFit.contain,
+              height: 32,
+            ),
+            Container(
+                padding: const EdgeInsets.all(8.0), child: Text('Ge-Spot'))
+          ],
+
+        ),
       ),
       backgroundColor: Colors.amberAccent,
       body: Center(

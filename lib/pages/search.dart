@@ -46,10 +46,13 @@ class _SearchPageState extends State<SearchPage> {
 
     return Scaffold(
 
-      backgroundColor: Colors.amberAccent,
+      backgroundColor: Colors.indigo,
       body: Column(children: <Widget>[
           const SizedBox(height: 5),
           TextFormField(
+
+            style: TextStyle(backgroundColor: Colors.white),
+
             autocorrect: false,
             controller: _inputController,
             validator: (value){
@@ -59,6 +62,7 @@ class _SearchPageState extends State<SearchPage> {
               return null;
             },
             decoration: const InputDecoration(
+                  fillColor: Colors.white,
                 labelText: "Artist ID ",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(5.0))),

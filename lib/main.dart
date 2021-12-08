@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
             if (snapshot.hasError) {
               return const SomethingWentWrong();
             } else if (snapshot.connectionState == ConnectionState.done) {
-              return AppDriver();
+              return Splash();
             } else {
               return Container(color: Colors.white);
             }
