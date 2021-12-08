@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text("Our featured playlist is: $name", style: const TextStyle(fontSize: 30, color: Colors.lightGreenAccent), textAlign: TextAlign.center),
                             SizedBox(width: 5, height: 10),
-                            Text("Go to this link to see the featured playlist!", style: const TextStyle(fontSize: 25, color: Colors.white), textAlign: TextAlign.center),
+                            Text("Go to this link to see the featured playlist!", style: const TextStyle(fontSize: 25, color: Colors.white), textAlign: TextAlign.center, decoration: TextDecoration.underline,),
                             SizedBox(width: 5, height: 10),
                             Container(
                               width: 300,
