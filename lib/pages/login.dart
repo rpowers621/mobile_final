@@ -24,7 +24,8 @@ class _LoginState extends State<Login>{
         },
         child: const Text("Sign in with email and password",
             style: TextStyle(
-                color: Colors.amberAccent)));
+                color: Colors.amberAccent,
+                fontFamily: 'RobotoCondensed',)));
     final signup = OutlinedButton(
         onPressed: (){
           Navigator.push(
@@ -32,19 +33,23 @@ class _LoginState extends State<Login>{
         },
         child: const Text('Sign Up',
             style: TextStyle(
-                color: Colors.amberAccent)
+                color: Colors.amberAccent,
+                fontFamily: 'RobotoCondensed',)
         ));
     final google = OutlinedButton.icon(
         icon: Image.asset('assets/googleicon.png', height: 20, width: 20,),
         label: const Text("Sign in With Google",
             style: TextStyle(
-                color: Colors.amberAccent)),
+                color: Colors.amberAccent,
+                fontFamily: 'RobotoCondensed',)),
         onPressed: (){
           Authentication().signInWithGoogle(context);
         } );
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login"),
+        title: const Text("Login",
+        style: TextStyle(
+                fontFamily: 'RobotoCondensed',)),
         automaticallyImplyLeading: false,
       ),
       backgroundColor: Colors.teal,
