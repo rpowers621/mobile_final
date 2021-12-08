@@ -16,7 +16,8 @@ class Spotify {
   var artist_names = [];
   var topTracks = [];
   String name = '';
-
+  // var featured_playlists = [];
+  var featured_playlists = { 'name':[], 'playlist_id':[]};
   var countryCode = "US";
 
 
@@ -93,6 +94,7 @@ class Spotify {
     var tracks = await spotify.artists.getTopTracks(artist_id, countryCode);
     for (var track in tracks) {
       this.topTracks.add(track.name);
+      print(track.name);
     }
     return topTracks;
   }
@@ -101,7 +103,21 @@ class Spotify {
 
   }
 
+  Future<Map> getFeaturedPlaylists() async{
 
+    var spotify = spotify2.SpotifyApi(getCredentials());
+
+    var playlistsResult =  await spotify.playlists.featured.all();
+
+    try {
+      playlistsResult.forEach((playlist) {
+        this.featured_playlists["name"]!.add(playlist.name);
+        this.featured_playlists["playlist_id"]!.add(playlist.id);
+      });
+    }catch (e){}
+
+    return featured_playlists;
+  }
 
 }
 
